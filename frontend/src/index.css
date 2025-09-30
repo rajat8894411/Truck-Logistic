@@ -1,0 +1,933 @@
+/* Trucking Logistics App Styles */
+@import 'leaflet/dist/leaflet.css';
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f8fafc;
+  color: #1f2937;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Reset and base styles */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: 600;
+}
+
+p {
+  margin: 0;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-family: inherit;
+}
+
+input, textarea, select {
+  font-family: inherit;
+  outline: none;
+}
+
+/* Utility Classes */
+.min-h-screen {
+  min-height: 100vh;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-1 {
+  flex: 1 1 0%;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.space-x-2 > * + * {
+  margin-left: 0.5rem;
+}
+
+.space-x-3 > * + * {
+  margin-left: 0.75rem;
+}
+
+.space-x-4 > * + * {
+  margin-left: 1rem;
+}
+
+.space-y-1 > * + * {
+  margin-top: 0.25rem;
+}
+
+.space-y-2 > * + * {
+  margin-top: 0.5rem;
+}
+
+.space-y-4 > * + * {
+  margin-top: 1rem;
+}
+
+.space-y-6 > * + * {
+  margin-top: 1.5rem;
+}
+
+.space-y-8 > * + * {
+  margin-top: 2rem;
+}
+
+/* Grid */
+.grid {
+  display: grid;
+}
+
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.gap-6 {
+  gap: 1.5rem;
+}
+
+/* Spacing */
+.p-2 { padding: 0.5rem; }
+.p-3 { padding: 0.75rem; }
+.p-4 { padding: 1rem; }
+.p-6 { padding: 1.5rem; }
+.p-8 { padding: 2rem; }
+.p-12 { padding: 3rem; }
+
+.px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
+.px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
+.px-4 { padding-left: 1rem; padding-right: 1rem; }
+.px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+
+.py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
+.py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+.py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+.py-6 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+.py-8 { padding-top: 2rem; padding-bottom: 2rem; }
+.py-12 { padding-top: 3rem; padding-bottom: 3rem; }
+
+.m-2 { margin: 0.5rem; }
+.m-4 { margin: 1rem; }
+
+.mx-auto { margin-left: auto; margin-right: auto; }
+
+.mt-1 { margin-top: 0.25rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-4 { margin-top: 1rem; }
+.mt-6 { margin-top: 1.5rem; }
+.mt-8 { margin-top: 2rem; }
+
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+
+.ml-3 { margin-left: 0.75rem; }
+.ml-4 { margin-left: 1rem; }
+.ml-6 { margin-left: 1.5rem; }
+
+.mr-2 { margin-right: 0.5rem; }
+.mr-3 { margin-right: 0.75rem; }
+
+/* Sizing */
+.w-full { width: 100%; }
+.w-0 { width: 0; }
+.w-4 { width: 1rem; }
+.w-6 { width: 1.5rem; }
+.w-8 { width: 2rem; }
+.w-10 { width: 2.5rem; }
+.w-12 { width: 3rem; }
+.w-16 { width: 4rem; }
+.w-32 { width: 8rem; }
+
+.h-4 { height: 1rem; }
+.h-6 { height: 1.5rem; }
+.h-8 { height: 2rem; }
+.h-10 { height: 2.5rem; }
+.h-12 { height: 3rem; }
+.h-16 { height: 4rem; }
+.h-32 { height: 8rem; }
+.h-0 { height: 0; }
+
+.max-w-xs { max-width: 20rem; }
+.max-w-md { max-width: 28rem; }
+.max-w-7xl { max-width: 80rem; }
+
+.min-w-0 { min-width: 0; }
+
+/* Colors */
+.bg-white { background-color: #ffffff; }
+.bg-gray-50 { background-color: #f9fafb; }
+.bg-gray-100 { background-color: #f3f4f6; }
+.bg-gray-200 { background-color: #e5e7eb; }
+.bg-gray-600 { background-color: #4b5563; }
+
+.bg-blue-50 { background-color: #eff6ff; }
+.bg-blue-100 { background-color: #dbeafe; }
+.bg-blue-500 { background-color: #3b82f6; }
+.bg-blue-600 { background-color: #2563eb; }
+.bg-blue-400 { background-color: #60a5fa; }
+
+.bg-red-50 { background-color: #fef2f2; }
+.bg-red-100 { background-color: #fee2e2; }
+.bg-red-200 { background-color: #fecaca; }
+
+.bg-green-100 { background-color: #dcfce7; }
+.bg-green-500 { background-color: #22c55e; }
+
+.bg-yellow-500 { background-color: #eab308; }
+.bg-purple-100 { background-color: #f3e8ff; }
+.bg-purple-500 { background-color: #a855f7; }
+
+.text-white { color: #ffffff; }
+.text-gray-500 { color: #6b7280; }
+.text-gray-600 { color: #4b5563; }
+.text-gray-700 { color: #374151; }
+.text-gray-800 { color: #1f2937; }
+.text-gray-900 { color: #111827; }
+
+.text-blue-600 { color: #2563eb; }
+.text-blue-800 { color: #1e40af; }
+.text-blue-900 { color: #1e3a8a; }
+
+.text-red-400 { color: #f87171; }
+.text-red-600 { color: #dc2626; }
+.text-red-700 { color: #b91c1c; }
+.text-red-800 { color: #991b1b; }
+
+.text-green-800 { color: #166534; }
+
+/* Typography */
+.text-xs { font-size: 0.75rem; line-height: 1rem; }
+.text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+.text-lg { font-size: 1.125rem; line-height: 1.75rem; }
+.text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+.text-2xl { font-size: 1.5rem; line-height: 2rem; }
+.text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+.text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+.text-6xl { font-size: 3.75rem; line-height: 1; }
+
+.font-medium { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+.font-bold { font-weight: 700; }
+.font-extrabold { font-weight: 800; }
+
+.text-center { text-align: center; }
+
+.capitalize { text-transform: capitalize; }
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Borders */
+.border { border-width: 1px; }
+.border-r { border-right-width: 1px; }
+
+.border-gray-200 { border-color: #e5e7eb; }
+.border-gray-300 { border-color: #d1d5db; }
+.border-red-200 { border-color: #fecaca; }
+.border-red-300 { border-color: #fca5a5; }
+.border-transparent { border-color: transparent; }
+
+.divide-y > * + * {
+  border-top-width: 1px;
+  border-top-color: #e5e7eb;
+}
+
+.rounded { border-radius: 0.25rem; }
+.rounded-md { border-radius: 0.375rem; }
+.rounded-lg { border-radius: 0.5rem; }
+.rounded-full { border-radius: 9999px; }
+.rounded-t-md { border-top-left-radius: 0.375rem; border-top-right-radius: 0.375rem; }
+.rounded-b-md { border-bottom-left-radius: 0.375rem; border-bottom-right-radius: 0.375rem; }
+.rounded-none { border-radius: 0; }
+
+/* Shadows */
+.shadow {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+.shadow-md {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+.shadow-sm {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Position */
+.relative { position: relative; }
+.absolute { position: absolute; }
+.fixed { position: fixed; }
+.sticky { position: sticky; }
+.inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+.inset-y-0 { top: 0; bottom: 0; }
+.top-0 { top: 0; }
+.right-0 { right: 0; }
+.z-10 { z-index: 10; }
+.z-40 { z-index: 40; }
+
+/* Display */
+.block { display: block; }
+.inline-block { display: inline-block; }
+.inline { display: inline; }
+.hidden { display: none; }
+.inline-flex { display: inline-flex; }
+
+/* Flex */
+.flex-shrink-0 { flex-shrink: 0; }
+.flex-grow { flex-grow: 1; }
+
+/* Overflow */
+.overflow-hidden { overflow: hidden; }
+.overflow-y-auto { overflow-y: auto; }
+
+/* Other */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.appearance-none {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.cursor-pointer { cursor: pointer; }
+.cursor-not-allowed { cursor: not-allowed; }
+
+.select-none { user-select: none; }
+
+.transition-colors {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.transition-shadow {
+  transition-property: box-shadow;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.duration-200 {
+  transition-duration: 200ms;
+}
+
+/* Hover states */
+.hover\:bg-gray-50:hover { background-color: #f9fafb; }
+.hover\:bg-gray-200:hover { background-color: #e5e7eb; }
+.hover\:bg-blue-500:hover { background-color: #3b82f6; }
+.hover\:bg-blue-600:hover { background-color: #2563eb; }
+.hover\:bg-blue-700:hover { background-color: #1d4ed8; }
+.hover\:bg-green-600:hover { background-color: #16a34a; }
+.hover\:bg-purple-600:hover { background-color: #9333ea; }
+.hover\:bg-red-200:hover { background-color: #fecaca; }
+
+.hover\:text-gray-900:hover { color: #111827; }
+.hover\:text-blue-500:hover { color: #3b82f6; }
+
+.hover\:shadow-md:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Focus states */
+.focus\:outline-none:focus { outline: 2px solid transparent; outline-offset: 2px; }
+.focus\:ring-2:focus { box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5); }
+.focus\:ring-blue-500:focus { box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5); }
+.focus\:ring-inset:focus { box-shadow: inset 0 0 0 2px rgba(59, 130, 246, 0.5); }
+.focus\:ring-offset-2:focus { box-shadow: 0 0 0 2px #fff, 0 0 0 4px rgba(59, 130, 246, 0.5); }
+.focus\:border-blue-500:focus { border-color: #3b82f6; }
+.focus\:ring-white:focus { box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5); }
+
+/* Animation */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Group hover */
+.group:hover .group-hover\:text-gray-900 {
+  color: #111827;
+}
+
+/* Responsive Design */
+@media (min-width: 640px) {
+  .sm\:px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .sm\:text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+  .sm\:rounded-lg { border-radius: 0.5rem; }
+  .sm\:flex-row { flex-direction: row; }
+  .sm\:items-center { align-items: center; }
+  .sm\:justify-between { justify-content: space-between; }
+  .sm\:mt-0 { margin-top: 0; }
+}
+
+@media (min-width: 768px) {
+  .md\:px-8 { padding-left: 2rem; padding-right: 2rem; }
+  .md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .md\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .md\:flex { display: flex; }
+  .md\:hidden { display: none; }
+  .md\:w-64 { width: 16rem; }
+  .md\:flex-col { flex-direction: column; }
+  .md\:fixed { position: fixed; }
+  .md\:pl-64 { padding-left: 16rem; }
+  .md\:ml-6 { margin-left: 1.5rem; }
+}
+
+@media (min-width: 1024px) {
+  .lg\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .lg\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .lg\:px-8 { padding-left: 2rem; padding-right: 2rem; }
+}
+
+/* Form Styles */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+select,
+textarea {
+  appearance: none;
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: #111827;
+  width: 100%;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="tel"]:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 1px #3b82f6;
+}
+
+/* Button Styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 0.375rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background-color: #1d4ed8;
+}
+
+.btn-primary:disabled {
+  background-color: #60a5fa;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+.btn-secondary:hover {
+  background-color: #e5e7eb;
+}
+
+/* Card */
+.card {
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  padding: 1.5rem;
+}
+
+/* Badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1rem;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Add at the end */
+.truck-marker {
+  background: none !important;
+  border: none !important;
+  font-size: 24px;
+}
+
+.start-marker {
+  background: none !important;
+  border: none !important;
+  font-size: 16px;
+}
+
+.end-marker {
+  background: none !important;
+  border: none !important;
+  font-size: 16px;
+}
+
+/* Dynamic Trucking Logistics Background */
+.login-background {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, 
+    #87CEEB 0%,     /* Sky blue */
+    #B0E0E6 20%,    /* Powder blue */
+    #98FB98 40%,    /* Light green */
+    #90EE90 60%,    /* Light green */
+    #228B22 80%,    /* Forest green */
+    #006400 100%    /* Dark green */
+  );
+}
+
+/* Glowing Sun */
+.login-background::before {
+  content: '';
+  position: absolute;
+  top: 5%;
+  right: 8%;
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, #FFD700 0%, #FFA500 30%, #FF8C00 70%, transparent 100%);
+  border-radius: 50%;
+  box-shadow: 
+    0 0 20px rgba(255, 215, 0, 0.6),
+    0 0 40px rgba(255, 165, 0, 0.4),
+    0 0 60px rgba(255, 140, 0, 0.2);
+  animation: sunGlow 4s ease-in-out infinite;
+  z-index: 1;
+}
+
+@keyframes sunGlow {
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow: 
+      0 0 20px rgba(255, 215, 0, 0.6),
+      0 0 40px rgba(255, 165, 0, 0.4),
+      0 0 60px rgba(255, 140, 0, 0.2);
+  }
+  50% { 
+    transform: scale(1.1);
+    box-shadow: 
+      0 0 25px rgba(255, 215, 0, 0.8),
+      0 0 50px rgba(255, 165, 0, 0.6),
+      0 0 75px rgba(255, 140, 0, 0.4);
+  }
+}
+
+/* Clear and Visible Road - No Lines on Left Side */
+.road-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    /* Main road - starts from center, no left side */
+    linear-gradient(90deg, 
+      transparent 0%, 
+      transparent 45%,
+      #1A1A1A 50%, 
+      #2C2C2C 55%,
+      #404040 60%,
+      #2C2C2C 65%,
+      #404040 70%,
+      #2C2C2C 75%,
+      #1A1A1A 80%,
+      transparent 85%,
+      transparent 100%
+    ),
+    /* No yellow lines - completely removed */
+    /* Road edge lines - only on right side */
+    linear-gradient(90deg,
+      transparent 0%,
+      transparent 69%,
+      #FFFFFF 70%,
+      #FFFFFF 72%,
+      transparent 73%,
+      transparent 100%
+    );
+  background-size: 100% 100%, 80px 100%, 100% 100%;
+  background-position: 0 0, 0 0, 0 0;
+  animation: roadMove 10s linear infinite;
+  z-index: 2;
+}
+
+/* Truck Image - Covers Left Side and Bottom Marked Area */
+.truck-background-image {
+  position: absolute;
+  top: 10%;
+  left: 0%;
+  width: 45%;
+  height: 95%;
+  background-image: url('./assets/images/Land-Transportation-truck.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.8;
+  z-index: 1;
+  filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.3));
+}
+
+@keyframes roadMove {
+  0% { 
+    background-position: 0 0, 0 0, 0 0;
+  }
+  100% { 
+    background-position: 0 0, -90px 0, 0 0;
+  }
+}
+
+/* Bigger Vehicles on Road */
+.vehicle-animation {
+  position: absolute;
+  font-size: 2.5rem;
+  animation: vehicleMoveCurved 15s linear infinite;
+  z-index: 4;
+  top: 75%;
+}
+
+.vehicle-animation:nth-child(1) {
+  animation-delay: 0s;
+  animation-duration: 18s;
+  font-size: 3.5rem; /* Much bigger truck */
+  top: 70%; /* Left lane */
+}
+
+.vehicle-animation:nth-child(2) {
+  animation-delay: -3s;
+  animation-duration: 12s;
+  font-size: 2.2rem; /* Bigger car */
+  top: 80%; /* Right lane */
+}
+
+.vehicle-animation:nth-child(3) {
+  animation-delay: -6s;
+  animation-duration: 16s;
+  font-size: 3rem; /* Bigger delivery truck */
+  top: 72%; /* Left lane */
+}
+
+.vehicle-animation:nth-child(4) {
+  animation-delay: -9s;
+  animation-duration: 10s;
+  font-size: 1.8rem; /* Bigger motorcycle */
+  top: 78%; /* Right lane */
+}
+
+.vehicle-animation:nth-child(5) {
+  animation-delay: -12s;
+  animation-duration: 20s;
+  font-size: 4rem; /* Very big truck */
+  top: 74%; /* Center lane */
+}
+
+.vehicle-animation:nth-child(6) {
+  animation-delay: -15s;
+  animation-duration: 14s;
+  font-size: 2.8rem; /* Bigger van */
+  top: 76%; /* Center-right lane */
+}
+
+@keyframes vehicleMoveCurved {
+  0% {
+    transform: translateX(-250px) translateY(0px) scale(0.8) rotateY(0deg);
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  25% {
+    transform: translateX(25vw) translateY(-5px) scale(0.9) rotateY(3deg);
+  }
+  50% {
+    transform: translateX(50vw) translateY(0px) scale(1) rotateY(0deg);
+  }
+  75% {
+    transform: translateX(75vw) translateY(5px) scale(0.9) rotateY(-3deg);
+  }
+  95% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(calc(100vw + 250px)) translateY(0px) scale(0.8) rotateY(0deg);
+    opacity: 0;
+  }
+}
+
+.vehicle-animation::before {
+  display: inline-block;
+  animation: vehicleBounce 2.5s ease-in-out infinite;
+  filter: drop-shadow(3px 3px 6px rgba(0,0,0,0.4));
+}
+
+.vehicle-animation:nth-child(1)::before { content: '🚛'; } /* Large Truck */
+.vehicle-animation:nth-child(2)::before { content: '🚗'; } /* Car */
+.vehicle-animation:nth-child(3)::before { content: '🚚'; } /* Delivery Truck */
+.vehicle-animation:nth-child(4)::before { content: '🏍️'; } /* Motorcycle */
+.vehicle-animation:nth-child(5)::before { content: '🚛'; } /* Another Large Truck */
+.vehicle-animation:nth-child(6)::before { content: '🚐'; } /* Van */
+
+@keyframes vehicleBounce {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  25% { transform: translateY(-3px) rotate(1deg); }
+  50% { transform: translateY(-1px) rotate(0deg); }
+  75% { transform: translateY(-2px) rotate(-1deg); }
+}
+
+/* Bigger Scrolling Trees */
+.scrolling-tree {
+  position: absolute;
+  font-size: 2.5rem;
+  animation: treeScroll 8s linear infinite;
+  z-index: 3;
+  filter: drop-shadow(3px 3px 6px rgba(0,0,0,0.4));
+}
+
+/* Left side trees */
+.scrolling-tree:nth-child(1) { 
+  left: 12%; 
+  animation-delay: 0s; 
+  font-size: 3rem;
+}
+.scrolling-tree:nth-child(2) { 
+  left: 8%; 
+  animation-delay: -2s; 
+  font-size: 2.5rem;
+}
+.scrolling-tree:nth-child(3) { 
+  left: 15%; 
+  animation-delay: -4s; 
+  font-size: 3.5rem;
+}
+.scrolling-tree:nth-child(4) { 
+  left: 10%; 
+  animation-delay: -6s; 
+  font-size: 2.8rem;
+}
+
+/* Right side trees */
+.scrolling-tree:nth-child(5) { 
+  left: 88%; 
+  animation-delay: -1s; 
+  font-size: 3.2rem;
+}
+.scrolling-tree:nth-child(6) { 
+  left: 92%; 
+  animation-delay: -3s; 
+  font-size: 2.7rem;
+}
+.scrolling-tree:nth-child(7) { 
+  left: 85%; 
+  animation-delay: -5s; 
+  font-size: 3.3rem;
+}
+.scrolling-tree:nth-child(8) { 
+  left: 90%; 
+  animation-delay: -7s; 
+  font-size: 2.9rem;
+}
+
+@keyframes treeScroll {
+  0% {
+    transform: translateY(-100vh) scale(0.8);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) scale(1.2);
+    opacity: 0;
+  }
+}
+
+.scrolling-tree::before {
+  content: attr(data-emoji);
+  display: inline-block;
+}
+
+/* Moving Clouds in Sky */
+.moving-cloud {
+  position: absolute;
+  font-size: 1.5rem;
+  animation: cloudMove 20s linear infinite;
+  z-index: 2;
+  filter: drop-shadow(1px 1px 3px rgba(255,255,255,0.5));
+}
+
+.moving-cloud:nth-child(1) { 
+  top: 8%; 
+  animation-delay: 0s; 
+  font-size: 1.8rem;
+}
+.moving-cloud:nth-child(2) { 
+  top: 12%; 
+  animation-delay: -5s; 
+  font-size: 1.4rem;
+}
+.moving-cloud:nth-child(3) { 
+  top: 6%; 
+  animation-delay: -10s; 
+  font-size: 1.6rem;
+}
+.moving-cloud:nth-child(4) { 
+  top: 15%; 
+  animation-delay: -15s; 
+  font-size: 1.2rem;
+}
+
+@keyframes cloudMove {
+  0% {
+    transform: translateX(-150px) translateY(0px);
+    opacity: 0.7;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(calc(100vw + 150px)) translateY(-10px);
+    opacity: 0.7;
+  }
+}
+
+.moving-cloud::before {
+  content: attr(data-emoji);
+  display: inline-block;
+}
+
+/* Performance Optimizations */
+.login-background,
+.road-container,
+.vehicle-animation,
+.scrolling-tree,
+.moving-cloud {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Login form container */
+.login-form-container {
+  position: relative;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 1rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  padding: 2rem;
+  transform: translateZ(0);
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .vehicle-animation,
+  .scrolling-tree,
+  .moving-cloud,
+  .road-container,
+  .login-background::before {
+    animation: none;
+  }
+}
