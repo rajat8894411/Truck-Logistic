@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create axios instance with base configuration
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL || 'http://127.0.0.1:8000/api',
+  baseURL: process.env.REACT_APP_API_BASE_URL || 'https://trucking-logistic.onrender.com/api',
   headers: {
     'Content-Type': 'application/json',
   },
