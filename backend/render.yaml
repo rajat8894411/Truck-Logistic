@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: trucking-logistic-backend
+    env: python
+    buildCommand: |
+      cd backend
+      pip install -r requirements.txt
+    startCommand: |
+      cd backend
+      python manage.py migrate
+      daphne -b 0.0.0.0 -p $PORT backend_project.asgi:application
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: backend_project.settings
+      - key: DB_NAME
+        value: truck_database
+      - key: DB_USER
+        value: truck_database_user
+      - key: DB_PASSWORD
+        value: CYEEcKlPMWsmpFVaSLcZ6cW3T9tJq7OC
+      - key: DB_HOST
+        value: dpg-d3ds5li4d50c739pfj70-a.oregon-postgres.render.com
+      - key: DB_PORT
+        value: 5432
