@@ -4,10 +4,9 @@ services:
     env: python
     region: oregon
     buildCommand: |
-      echo "Current directory: $(pwd)"
-      echo "Contents: $(ls -la)"
+      chmod +x debug_render.sh
+      ./debug_render.sh
       cd backend
-      echo "Backend directory contents: $(ls -la)"
       pip install -r requirements.txt
     startCommand: |
       cd backend
