@@ -92,25 +92,25 @@ CHANNEL_LAYERS = {
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 # Database
-# For production, use PostgreSQL:
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': config('DB_NAME', default='trucking_logistics'),
-#         'USER': config('DB_USER', default='postgres'),
-#         'PASSWORD': config('DB_PASSWORD', default=''),
-#         'HOST': config('DB_HOST', default='localhost'),
-#         'PORT': config('DB_PORT', default='5432'),
-#     }
-# }
-
-# For development, using SQLite
+# Use PostgreSQL for production
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_NAME', default='truck_database'),
+        'USER': config('DB_USER', default='truck_database_user'),
+        'PASSWORD': config('DB_PASSWORD', default='CYEEcKlPMWsmpFVaSLcZ6cW3T9tJq7OC'),
+        'HOST': config('DB_HOST', default='dpg-d3ds5li4d50c739pfj70-a'),
+        'PORT': config('DB_PORT', default='5432'),
     }
 }
+
+# Uncomment below and comment above to use SQLite for development
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # Password validation
