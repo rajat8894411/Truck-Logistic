@@ -2,8 +2,12 @@ services:
   - type: web
     name: trucking-logistic-backend
     env: python
+    region: oregon
     buildCommand: |
+      echo "Current directory: $(pwd)"
+      echo "Contents: $(ls -la)"
       cd backend
+      echo "Backend directory contents: $(ls -la)"
       pip install -r requirements.txt
     startCommand: |
       cd backend
