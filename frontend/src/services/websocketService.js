@@ -7,7 +7,7 @@ class WebSocketService {
   }
 
   connect(orderId, onMessage, onError, onClose) {
-    const wsUrl = `ws://https://trucking-logistic.onrender.com//ws/tracking/${orderId}/`;
+    const wsUrl = `ws://https://trucking-logistic.onrender.com/ws/tracking/${orderId}/`;
 
     // Close existing connection for this order if any
     if (this.connections.has(orderId)) {
