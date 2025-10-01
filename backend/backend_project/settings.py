@@ -11,21 +11,17 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-from decouple import config
 from datetime import timedelta
+import os
+from dotenv import load_dotenv
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-_zk!%q7y@jxq5k*o+z7z3qxr9v&h3q9f1k8_0k)4#5+4&6e1=s')
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY', default='django-insecure-_zk!%q7y@jxq5k*o+z7z3qxr9v&h3q9f1k8_0k)4#5+4&6e1=s')
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=True, cast=bool)
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = ['*']
 
@@ -78,12 +74,11 @@ TEMPLATES = [
 WSGI_APPLICATION = 'backend_project.wsgi.application'
 ASGI_APPLICATION = 'backend_project.asgi.application'
 
-# Channel layers for WebSocket support
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            'hosts': [config('REDIS_URL', default='redis://localhost:6379/1')],
+            'hosts': [os.getenv('REDIS_URL', 'redis://localhost:6379/1')],
         },
     },
 }
@@ -91,16 +86,14 @@ CHANNEL_LAYERS = {
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# Database
-# Use PostgreSQL for production
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME', default='truck_database'),
-        'USER': config('DB_USER', default='truck_database_user'),
-        'PASSWORD': config('DB_PASSWORD', default='CYEEcKlPMWsmpFVaSLcZ6cW3T9tJq7OC'),
-        'HOST': config('DB_HOST', default='dpg-d3ds5li4d50c739pfj70-a'),
-        'PORT': config('DB_PORT', default='5432'),
+        'NAME': os.getenv('DB_NAME', 'truck_database'),
+        'USER': os.getenv('DB_USER', 'truck_database_user'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'CYEEcKlPMWsmpFVaSLcZ6cW3T9tJq7OC'),
+        'HOST': os.getenv('DB_HOST', 'dpg-d3ds5li4d50c739pfj70-a'),
+        'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
 
