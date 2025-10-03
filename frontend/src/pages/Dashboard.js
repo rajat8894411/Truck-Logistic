@@ -16,7 +16,7 @@ const Dashboard = () => {
   const fetchDashboardData = async () => {
     try {
       setLoading(true);
-      const data = isAdmin
+      const data = isAdmin 
         ? await truckingService.getAdminDashboard()
         : await truckingService.getTruckOwnerDashboard();
       setDashboardData(data);
@@ -58,26 +58,28 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="space-y-6 animate-fadeIn">
-      <div className="card hover:-translate-y-1" style={{ animation: 'slideInUp 0.4s ease-out' }}>
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="bg-white shadow rounded-lg p-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">
+            <h1 className="text-2xl font-bold text-gray-900">
               Welcome back, {user?.first_name}! 👋
             </h1>
-            <p className="mt-2 text-base text-gray-600">
+            <p className="mt-1 text-sm text-gray-600">
               {isAdmin ? 'Admin Dashboard' : 'Truck Owner Dashboard'}
             </p>
           </div>
           <div className="flex items-center space-x-2">
-            <span className="badge bg-blue-100 text-blue-800 capitalize" style={{ padding: '0.5rem 1rem', fontSize: '0.875rem' }}>
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 capitalize">
               {user?.role === 'admin' ? 'Admin' : 'Truck Owner'}
             </span>
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" style={{ animation: 'slideInUp 0.5s ease-out 0.1s both' }}>
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {isAdmin ? (
           <AdminStats data={dashboardData} />
         ) : (
@@ -85,8 +87,9 @@ const Dashboard = () => {
         )}
       </div>
 
-      <div className="card" style={{ animation: 'slideInUp 0.6s ease-out 0.2s both' }}>
-        <h2 className="text-xl font-semibold text-gray-900 mb-6">Quick Actions</h2>
+      {/* Recent Activity */}
+      <div className="bg-white shadow rounded-lg p-6">
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {isAdmin ? <AdminQuickActions /> : <TruckOwnerQuickActions />}
         </div>
@@ -125,18 +128,18 @@ const AdminStats = ({ data }) => {
 
   return (
     <>
-      {stats.map((stat, index) => (
-        <div key={stat.name} className="card transition-all hover:scale-105" style={{ animationDelay: `${index * 0.1}s` }}>
+      {stats.map((stat) => (
+        <div key={stat.name} className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center">
-            <div className={`flex-shrink-0 rounded-xl ${stat.color} p-4 transition-transform hover:rotate-6`} style={{ boxShadow: '0 8px 16px rgba(0,0,0,0.15)' }}>
-              <span className="text-white text-2xl">{stat.icon}</span>
+            <div className={`flex-shrink-0 rounded-md ${stat.color} p-3`}>
+              <span className="text-white text-xl">{stat.icon}</span>
             </div>
-            <div className="ml-5 w-0 flex-1">
+            <div className="ml-4 w-0 flex-1">
               <dl>
-                <dt className="text-sm font-medium text-gray-600 truncate">
+                <dt className="text-sm font-medium text-gray-500 truncate">
                   {stat.name}
                 </dt>
-                <dd className="text-3xl font-bold text-gray-900 mt-1">
+                <dd className="text-2xl font-semibold text-gray-900">
                   {stat.value}
                 </dd>
               </dl>
@@ -178,18 +181,18 @@ const TruckOwnerStats = ({ data }) => {
 
   return (
     <>
-      {stats.map((stat, index) => (
-        <div key={stat.name} className="card transition-all hover:scale-105" style={{ animationDelay: `${index * 0.1}s` }}>
+      {stats.map((stat) => (
+        <div key={stat.name} className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center">
-            <div className={`flex-shrink-0 rounded-xl ${stat.color} p-4 transition-transform hover:rotate-6`} style={{ boxShadow: '0 8px 16px rgba(0,0,0,0.15)' }}>
-              <span className="text-white text-2xl">{stat.icon}</span>
+            <div className={`flex-shrink-0 rounded-md ${stat.color} p-3`}>
+              <span className="text-white text-xl">{stat.icon}</span>
             </div>
-            <div className="ml-5 w-0 flex-1">
+            <div className="ml-4 w-0 flex-1">
               <dl>
-                <dt className="text-sm font-medium text-gray-600 truncate">
+                <dt className="text-sm font-medium text-gray-500 truncate">
                   {stat.name}
                 </dt>
-                <dd className="text-3xl font-bold text-gray-900 mt-1">
+                <dd className="text-2xl font-semibold text-gray-900">
                   {stat.value}
                 </dd>
               </dl>
@@ -229,15 +232,15 @@ const AdminQuickActions = () => {
   return (
     <>
       {actions.map((action) => (
-        <a key={action.name} href={action.href} className="relative group block">
-          <div className="bg-white border-2 border-gray-100 rounded-xl p-5 hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer">
-            <div className="flex items-center space-x-4">
-              <div className={`flex-shrink-0 rounded-lg ${action.color} p-3 transition-all group-hover:scale-110`}>
-                <span className="text-white text-xl">{action.icon}</span>
+        <a key={action.name} href={action.href} className="relative group">
+          <div className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+            <div className="flex items-center space-x-3">
+              <div className={`flex-shrink-0 rounded-md ${action.color} p-2 transition-colors`}>
+                <span className="text-white text-lg">{action.icon}</span>
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-base font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">{action.name}</p>
-                <p className="text-sm text-gray-600 mt-1">{action.description}</p>
+                <p className="text-sm font-medium text-gray-900">{action.name}</p>
+                <p className="text-sm text-gray-500">{action.description}</p>
               </div>
             </div>
           </div>
@@ -276,14 +279,14 @@ const TruckOwnerQuickActions = () => {
     <>
       {actions.map((action) => (
         <div key={action.name} className="relative group">
-          <div className="bg-white border-2 border-gray-100 rounded-xl p-5 hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer">
-            <div className="flex items-center space-x-4">
-              <div className={`flex-shrink-0 rounded-lg ${action.color} p-3 transition-all group-hover:scale-110`}>
-                <span className="text-white text-xl">{action.icon}</span>
+          <div className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
+            <div className="flex items-center space-x-3">
+              <div className={`flex-shrink-0 rounded-md ${action.color} p-2 transition-colors`}>
+                <span className="text-white text-lg">{action.icon}</span>
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-base font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">{action.name}</p>
-                <p className="text-sm text-gray-600 mt-1">{action.description}</p>
+                <p className="text-sm font-medium text-gray-900">{action.name}</p>
+                <p className="text-sm text-gray-500">{action.description}</p>
               </div>
             </div>
           </div>

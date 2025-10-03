@@ -76,30 +76,23 @@ const Layout = () => {
 
       {/* Desktop sidebar */}
       <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
-        <div className="flex flex-col flex-grow pt-6 bg-white overflow-y-auto shadow-xl" style={{ background: 'linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%)' }}>
-          <div className="flex items-center flex-shrink-0 px-6 mb-8">
-            <div className="flex items-center space-x-3">
-              <div className="bg-gradient-to-br from-blue-500 to-blue-700 p-2 rounded-xl shadow-lg">
-                <span className="text-2xl">🚛</span>
-              </div>
-              <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-blue-800" style={{ backgroundClip: 'text', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-                Trucking
-              </h1>
-            </div>
+        <div className="flex flex-col flex-grow pt-5 bg-white overflow-y-auto border-r">
+          <div className="flex items-center flex-shrink-0 px-4">
+            <h1 className="text-xl font-bold text-gray-900">🚛 Trucking Logistics</h1>
           </div>
-          <div className="flex-grow flex flex-col">
-            <nav className="flex-1 px-3 pb-4 space-y-2">
+          <div className="mt-5 flex-grow flex flex-col">
+            <nav className="flex-1 px-2 pb-4 space-y-1">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`group flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all ${
+                  className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md ${
                     isActiveRoute(item.href)
-                      ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg transform scale-105'
-                      : 'text-gray-700 hover:bg-blue-50 hover:text-blue-600 hover:transform hover:scale-102'
+                      ? 'bg-blue-100 text-blue-900'
+                      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                   }`}
                 >
-                  <span className="mr-4 text-xl">{item.icon}</span>
+                  <span className="mr-3 text-lg">{item.icon}</span>
                   {item.name}
                 </Link>
               ))}
@@ -110,35 +103,41 @@ const Layout = () => {
 
       {/* Main content */}
       <div className="md:pl-64 flex flex-col flex-1">
-        <div className="sticky top-0 z-10 flex-shrink-0 flex h-18 bg-white shadow-md backdrop-filter backdrop-blur-lg bg-opacity-95">
+        <div className="sticky top-0 z-10 flex-shrink-0 flex h-16 bg-white shadow">
           <button
-            className="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 md:hidden hover:bg-gray-50 transition-colors"
+            className="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 md:hidden"
             onClick={() => setIsSidebarOpen(true)}
           >
             <span className="sr-only">Open sidebar</span>
             <span className="text-xl">☰</span>
           </button>
-          <div className="flex-1 px-6 flex justify-between items-center">
-            <div className="flex items-center">
-              <h2 className="text-xl font-bold text-gray-900 capitalize">
-                {location.pathname.split('/')[1] || 'Dashboard'}
-              </h2>
-            </div>
-            <div className="flex items-center space-x-4">
-              <div className="hidden md:flex flex-col items-end">
-                <span className="text-sm font-semibold text-gray-900">
-                  {user ? `${user.first_name || ''} ${user.last_name || ''}`.trim() || user.username : ''}
-                </span>
-                <span className="text-xs text-gray-600 capitalize">
-                  {user?.role === 'admin' ? 'Admin' : 'Truck Owner'}
-                </span>
+          <div className="flex-1 px-4 flex justify-between">
+            <div className="flex-1 flex">
+              <div className="flex items-center">
+                <h2 className="text-lg font-semibold text-gray-900 capitalize">
+                  {location.pathname.split('/')[1] || 'Dashboard'}
+                </h2>
               </div>
-              <button
-                onClick={handleLogout}
-                className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all hover:shadow-lg hover:-translate-y-0.5"
-              >
-                Logout
-              </button>
+            </div>
+            <div className="ml-4 flex items-center md:ml-6">
+              <div className="relative">
+                <div className="flex items-center space-x-4">
+                  <div className="flex flex-col items-end">
+                    <span className="text-sm font-medium text-gray-900">
+                      {user ? `${user.first_name || ''} ${user.last_name || ''}`.trim() || user.username : ''}
+                    </span>
+                    <span className="text-xs text-gray-500 capitalize">
+                      {user?.role === 'admin' ? 'Admin' : 'Truck Owner'}
+                    </span>
+                  </div>
+                  <button
+                    onClick={handleLogout}
+                    className="bg-gray-100 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium text-gray-700 transition-colors duration-200"
+                  >
+                    Logout
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
