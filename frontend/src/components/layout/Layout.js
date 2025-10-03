@@ -35,33 +35,45 @@ const Layout = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
       {/* Mobile sidebar */}
       <div className={`fixed inset-0 flex z-40 md:hidden ${isSidebarOpen ? '' : 'hidden'}`}>
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-75" onClick={() => setIsSidebarOpen(false)}></div>
-        <div className="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-white">
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-75 backdrop-blur-sm" onClick={() => setIsSidebarOpen(false)}></div>
+        <div className="modern-mobile-sidebar">
           <div className="absolute top-0 right-0 -mr-12 pt-2">
             <button
-              className="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+              className="ml-1 flex items-center justify-center h-10 w-10 rounded-full bg-red-500 hover:bg-red-600 text-white shadow-lg hover:shadow-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
               onClick={() => setIsSidebarOpen(false)}
             >
               <span className="sr-only">Close sidebar</span>
               <span className="text-white text-xl">×</span>
             </button>
           </div>
-          <div className="flex-shrink-0 flex items-center px-4">
-            <h1 className="text-xl font-bold text-gray-900">🚛 Trucking Logistics</h1>
+          <div className="flex-shrink-0 flex items-center px-6 py-6 logo-section">
+            <div className="flex items-center space-x-3">
+              <div className="profitruck-logo">
+                <div className="profitruck-logo-text">
+                  <span className="profitruck-profi">PROFI</span>
+                  <div className="profitruck-wheel">
+                    <div className="profitruck-truck"></div>
+                    <div className="profitruck-lines"></div>
+                  </div>
+                  <span className="profitruck-truck-text">TRUCK</span>
+                  <span className="profitruck-emoji">🚛</span>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="mt-5 flex-1 h-0 overflow-y-auto">
-            <nav className="px-2 space-y-1">
+          <div className="mt-2 flex-1 h-0 overflow-y-auto px-4">
+            <nav className="px-2 space-y-3">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md ${
+                  className={`modern-nav-item ${
                     isActiveRoute(item.href)
-                      ? 'bg-blue-100 text-blue-900'
-                      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                      ? 'modern-nav-active'
+                      : 'modern-nav-inactive'
                   }`}
                   onClick={() => setIsSidebarOpen(false)}
                 >
@@ -76,66 +88,84 @@ const Layout = () => {
 
       {/* Desktop sidebar */}
       <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
-        <div className="flex flex-col flex-grow pt-5 bg-white overflow-y-auto border-r">
-          <div className="flex items-center flex-shrink-0 px-4">
-            <h1 className="text-xl font-bold text-gray-900">🚛 Trucking Logistics</h1>
-          </div>
-          <div className="mt-5 flex-grow flex flex-col">
-            <nav className="flex-1 px-2 pb-4 space-y-1">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className={`group flex items-center px-2 py-2 text-sm font-medium rounded-md ${
-                    isActiveRoute(item.href)
-                      ? 'bg-blue-100 text-blue-900'
-                      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-                  }`}
-                >
-                  <span className="mr-3 text-lg">{item.icon}</span>
-                  {item.name}
-                </Link>
-              ))}
-            </nav>
+        <div className="modern-sidebar-container">
+          <div className="modern-sidebar-blur"></div>
+          <div className="modern-sidebar-content">
+            <div className="flex items-center flex-shrink-0 px-6 py-6 logo-section">
+              <div className="flex items-center space-x-3">
+                <div className="profitruck-logo">
+                  <div className="profitruck-logo-text">
+                    <span className="profitruck-profi">PROFI</span>
+                    <div className="profitruck-wheel">
+                      <div className="profitruck-truck"></div>
+                      <div className="profitruck-lines"></div>
+                    </div>
+                    <span className="profitruck-truck-text">TRUCK</span>
+                    <span className="profitruck-emoji">🚛</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="mt-2 flex-grow flex flex-col px-4">
+              <nav className="flex-1 px-2 pb-6 space-y-3">
+                {navigation.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className={`modern-nav-item ${
+                      isActiveRoute(item.href)
+                        ? 'modern-nav-active'
+                        : 'modern-nav-inactive'
+                    }`}
+                  >
+                    <span className="mr-3 text-lg">{item.icon}</span>
+                    {item.name}
+                  </Link>
+                ))}
+              </nav>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Main content */}
       <div className="md:pl-64 flex flex-col flex-1">
-        <div className="sticky top-0 z-10 flex-shrink-0 flex h-16 bg-white shadow">
-          <button
-            className="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 md:hidden"
-            onClick={() => setIsSidebarOpen(true)}
-          >
-            <span className="sr-only">Open sidebar</span>
-            <span className="text-xl">☰</span>
-          </button>
-          <div className="flex-1 px-4 flex justify-between">
-            <div className="flex-1 flex">
-              <div className="flex items-center">
-                <h2 className="text-lg font-semibold text-gray-900 capitalize">
-                  {location.pathname.split('/')[1] || 'Dashboard'}
-                </h2>
+        <div className="modern-top-header">
+          <div className="modern-top-header-blur"></div>
+          <div className="modern-top-header-content">
+            <button
+              className="modern-mobile-menu-btn"
+              onClick={() => setIsSidebarOpen(true)}
+            >
+              <span className="sr-only">Open sidebar</span>
+              <span className="text-xl">☰</span>
+            </button>
+            <div className="flex-1 px-6 flex justify-between items-center">
+              <div className="flex-1 flex">
+                <div className="flex items-center">
+                  <h2 className="modern-page-title capitalize">
+                    {location.pathname.split('/')[1] || 'Dashboard'}
+                  </h2>
+                </div>
               </div>
-            </div>
-            <div className="ml-4 flex items-center md:ml-6">
-              <div className="relative">
-                <div className="flex items-center space-x-4">
-                  <div className="flex flex-col items-end">
-                    <span className="text-sm font-medium text-gray-900">
-                      {user ? `${user.first_name || ''} ${user.last_name || ''}`.trim() || user.username : ''}
-                    </span>
-                    <span className="text-xs text-gray-500 capitalize">
-                      {user?.role === 'admin' ? 'Admin' : 'Truck Owner'}
-                    </span>
+              <div className="ml-4 flex items-center md:ml-6">
+                <div className="relative">
+                  <div className="flex items-center space-x-4">
+                    <div className="modern-user-info">
+                      <span className="modern-user-name">
+                        {user ? `${user.first_name || ''} ${user.last_name || ''}`.trim() || user.username : ''}
+                      </span>
+                      <span className="modern-user-role">
+                        {user?.role === 'admin' ? 'Admin' : 'Truck Owner'}
+                      </span>
+                    </div>
+                    <button
+                      onClick={handleLogout}
+                      className="modern-logout-btn"
+                    >
+                      Logout
+                    </button>
                   </div>
-                  <button
-                    onClick={handleLogout}
-                    className="bg-gray-100 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium text-gray-700 transition-colors duration-200"
-                  >
-                    Logout
-                  </button>
                 </div>
               </div>
             </div>

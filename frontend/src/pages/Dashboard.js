@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import truckingService from '../services/truckingService';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 
@@ -8,6 +9,7 @@ const Dashboard = () => {
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchDashboardData();
@@ -35,22 +37,22 @@ const Dashboard = () => {
 
   if (error) {
     return (
-      <div className="bg-red-50 border border-red-200 rounded-md p-4">
-        <div className="flex">
+      <div className="modern-error-card">
+        <div className="flex items-start">
           <div className="flex-shrink-0">
-            <span className="text-red-400 text-xl">⚠️</span>
-          </div>
-          <div className="ml-3">
-            <h3 className="text-sm font-medium text-red-800">Error</h3>
-            <div className="mt-2 text-sm text-red-700">{error}</div>
-            <div className="mt-4">
-              <button
-                onClick={fetchDashboardData}
-                className="text-sm bg-red-100 hover:bg-red-200 text-red-800 px-3 py-1 rounded-md transition-colors"
-              >
-                Try Again
-              </button>
+            <div className="modern-error-icon">
+              <span className="text-white text-2xl">⚠</span>
             </div>
+          </div>
+          <div className="ml-4 flex-1">
+            <h3 className="text-lg font-bold text-red-900">Error Loading Dashboard</h3>
+            <div className="mt-2 text-sm text-red-700">{error}</div>
+            <button
+              onClick={fetchDashboardData}
+              className="modern-error-button"
+            >
+              Try Again
+            </button>
           </div>
         </div>
       </div>
@@ -58,242 +60,237 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="bg-white shadow rounded-lg p-6">
+    <div className="space-y-8 animate-fade-in">
+      <ModernHeader user={user} isAdmin={isAdmin} />
+      <ModernStatsGrid data={dashboardData} isAdmin={isAdmin} />
+      <ModernQuickActions isAdmin={isAdmin} navigate={navigate} />
+    </div>
+  );
+};
+
+const ModernHeader = ({ user, isAdmin }) => {
+  return (
+    <div className="modern-header-container">
+      <div className="modern-header-blur"></div>
+      <div className="modern-header-card">
         <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">
+          <div className="flex-1">
+            <h1 className="modern-header-title">
               Welcome back, {user?.first_name}! 👋
             </h1>
-            <p className="mt-1 text-sm text-gray-600">
+            <p className="modern-header-subtitle">
               {isAdmin ? 'Admin Dashboard' : 'Truck Owner Dashboard'}
             </p>
           </div>
-          <div className="flex items-center space-x-2">
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 capitalize">
-              {user?.role === 'admin' ? 'Admin' : 'Truck Owner'}
-            </span>
+          <div className="hidden md:block">
+            <div className="modern-header-badge">
+              <span className="text-white font-bold text-sm">
+                {user?.role === 'admin' ? 'ADMIN' : 'TRUCK OWNER'}
+              </span>
+            </div>
           </div>
-        </div>
-      </div>
-
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {isAdmin ? (
-          <AdminStats data={dashboardData} />
-        ) : (
-          <TruckOwnerStats data={dashboardData} />
-        )}
-      </div>
-
-      {/* Recent Activity */}
-      <div className="bg-white shadow rounded-lg p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {isAdmin ? <AdminQuickActions /> : <TruckOwnerQuickActions />}
         </div>
       </div>
     </div>
   );
 };
 
-const AdminStats = ({ data }) => {
-  const stats = [
+const ModernStatsGrid = ({ data, isAdmin }) => {
+  const adminStats = [
     {
       name: 'Total Requirements',
       value: data?.total_requirements || 0,
       icon: '📋',
-      color: 'bg-blue-500'
+      gradient: 'blue-cyan',
+      trend: '+12%',
+      trendUp: true
     },
     {
       name: 'Active Orders',
       value: data?.active_orders || 0,
       icon: '📦',
-      color: 'bg-green-500'
+      gradient: 'green-emerald',
+      trend: '+8%',
+      trendUp: true
     },
     {
       name: 'Pending Bids',
       value: data?.pending_bids || 0,
       icon: '💰',
-      color: 'bg-yellow-500'
+      gradient: 'yellow-orange',
+      trend: '-3%',
+      trendUp: false
     },
     {
       name: 'Total Revenue',
       value: `$${data?.total_revenue || 0}`,
       icon: '💵',
-      color: 'bg-purple-500'
+      gradient: 'purple-pink',
+      trend: '+24%',
+      trendUp: true
     }
   ];
 
-  return (
-    <>
-      {stats.map((stat) => (
-        <div key={stat.name} className="bg-white rounded-lg shadow p-6">
-          <div className="flex items-center">
-            <div className={`flex-shrink-0 rounded-md ${stat.color} p-3`}>
-              <span className="text-white text-xl">{stat.icon}</span>
-            </div>
-            <div className="ml-4 w-0 flex-1">
-              <dl>
-                <dt className="text-sm font-medium text-gray-500 truncate">
-                  {stat.name}
-                </dt>
-                <dd className="text-2xl font-semibold text-gray-900">
-                  {stat.value}
-                </dd>
-              </dl>
-            </div>
-          </div>
-        </div>
-      ))}
-    </>
-  );
-};
-
-const TruckOwnerStats = ({ data }) => {
-  const stats = [
+  const truckOwnerStats = [
     {
       name: 'My Trucks',
       value: data?.total_trucks || 0,
       icon: '🚛',
-      color: 'bg-blue-500'
+      gradient: 'blue-cyan',
+      trend: '+2',
+      trendUp: true
     },
     {
       name: 'Active Orders',
       value: data?.active_orders || 0,
       icon: '📦',
-      color: 'bg-green-500'
+      gradient: 'green-emerald',
+      trend: '+5',
+      trendUp: true
     },
     {
       name: 'Pending Bids',
       value: data?.pending_bids || 0,
       icon: '💰',
-      color: 'bg-yellow-500'
+      gradient: 'yellow-orange',
+      trend: '0',
+      trendUp: true
     },
     {
       name: 'Total Earnings',
       value: `$${data?.total_earnings || 0}`,
       icon: '💵',
-      color: 'bg-purple-500'
+      gradient: 'purple-pink',
+      trend: '+18%',
+      trendUp: true
     }
   ];
 
+  const stats = isAdmin ? adminStats : truckOwnerStats;
+
   return (
-    <>
-      {stats.map((stat) => (
-        <div key={stat.name} className="bg-white rounded-lg shadow p-6">
-          <div className="flex items-center">
-            <div className={`flex-shrink-0 rounded-md ${stat.color} p-3`}>
-              <span className="text-white text-xl">{stat.icon}</span>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {stats.map((stat, index) => (
+        <div
+          key={stat.name}
+          className="modern-stat-card"
+          style={{ animationDelay: `${index * 100}ms` }}
+        >
+          <div className={`modern-stat-card-inner gradient-${stat.gradient}`}>
+            <div className="flex items-start justify-between mb-4">
+              <div className={`modern-stat-icon gradient-${stat.gradient}`}>
+                <span className="text-2xl">{stat.icon}</span>
+              </div>
+              <div className={`modern-trend-badge ${stat.trendUp ? 'trend-up' : 'trend-down'}`}>
+                {stat.trendUp ? '↑' : '↓'} {stat.trend}
+              </div>
             </div>
-            <div className="ml-4 w-0 flex-1">
-              <dl>
-                <dt className="text-sm font-medium text-gray-500 truncate">
-                  {stat.name}
-                </dt>
-                <dd className="text-2xl font-semibold text-gray-900">
-                  {stat.value}
-                </dd>
-              </dl>
+            
+            <div className="space-y-1">
+              <p className="modern-stat-label">{stat.name}</p>
+              <p className={`modern-stat-value gradient-text-${stat.gradient}`}>
+                {stat.value}
+              </p>
+            </div>
+            
+            <div className="modern-progress-bar">
+              <div className={`modern-progress-fill gradient-${stat.gradient}`}></div>
             </div>
           </div>
         </div>
       ))}
-    </>
+    </div>
   );
 };
 
-const AdminQuickActions = () => {
-  const actions = [
+const ModernQuickActions = ({ isAdmin, navigate }) => {
+  const adminActions = [
     {
       name: 'Create New Requirement',
       description: 'Post a new transport requirement',
       icon: '➕',
       href: '/requirements/create',
-      color: 'bg-blue-500 hover:bg-blue-600'
+      gradient: 'blue-cyan'
     },
     {
       name: 'Manage Bids',
       description: 'Review and respond to bids',
       icon: '💰',
       href: '/bids/manage',
-      color: 'bg-green-500 hover:bg-green-600'
+      gradient: 'green-emerald'
     },
     {
       name: 'Track Orders',
       description: 'Monitor active orders',
       icon: '📍',
       href: '/orders/track',
-      color: 'bg-purple-500 hover:bg-purple-600'
+      gradient: 'purple-pink'
     }
   ];
 
-  return (
-    <>
-      {actions.map((action) => (
-        <a key={action.name} href={action.href} className="relative group">
-          <div className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
-            <div className="flex items-center space-x-3">
-              <div className={`flex-shrink-0 rounded-md ${action.color} p-2 transition-colors`}>
-                <span className="text-white text-lg">{action.icon}</span>
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-gray-900">{action.name}</p>
-                <p className="text-sm text-gray-500">{action.description}</p>
-              </div>
-            </div>
-          </div>
-        </a>
-      ))}
-    </>
-  );
-};
-
-const TruckOwnerQuickActions = () => {
-  const actions = [
+  const truckOwnerActions = [
     {
       name: 'Browse Jobs',
       description: 'Find available transport requirements',
       icon: '🔍',
       href: '/requirements',
-      color: 'bg-blue-500 hover:bg-blue-600'
+      gradient: 'blue-cyan'
     },
     {
       name: 'My Bids',
       description: 'Check status of your bids',
       icon: '💰',
       href: '/my-bids',
-      color: 'bg-green-500 hover:bg-green-600'
+      gradient: 'green-emerald'
     },
     {
       name: 'Manage Trucks',
       description: 'Update your truck information',
       icon: '🚛',
       href: '/trucks',
-      color: 'bg-purple-500 hover:bg-purple-600'
+      gradient: 'purple-pink'
     }
   ];
 
+  const actions = isAdmin ? adminActions : truckOwnerActions;
+
   return (
-    <>
-      {actions.map((action) => (
-        <div key={action.name} className="relative group">
-          <div className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer">
-            <div className="flex items-center space-x-3">
-              <div className={`flex-shrink-0 rounded-md ${action.color} p-2 transition-colors`}>
-                <span className="text-white text-lg">{action.icon}</span>
+    <div className="modern-actions-container">
+      <h2 className="modern-actions-title">Quick Actions</h2>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {actions.map((action, index) => (
+          <button
+            key={action.name}
+            onClick={() => navigate(action.href)}
+            className="modern-action-card"
+            style={{ animationDelay: `${index * 100}ms` }}
+          >
+            <div className="modern-action-content">
+              <div className={`modern-action-icon gradient-${action.gradient}`}>
+                <span className="text-3xl">{action.icon}</span>
               </div>
+              
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-gray-900">{action.name}</p>
-                <p className="text-sm text-gray-500">{action.description}</p>
+                <h3 className={`modern-action-title gradient-text-${action.gradient}`}>
+                  {action.name}
+                </h3>
+                <p className="modern-action-description">
+                  {action.description}
+                </p>
               </div>
             </div>
-          </div>
-        </div>
-      ))}
-    </>
+            
+            <div className="modern-action-arrow">
+              <span className={`gradient-text-${action.gradient}`}>Get Started →</span>
+            </div>
+          </button>
+        ))}
+      </div>
+    </div>
   );
 };
 
+
 export default Dashboard;
+
